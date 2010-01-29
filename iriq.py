@@ -33,12 +33,7 @@ class parser(file):
 	self.read(f)
 
     def read(self, f):
-	for line in f.readlines():
-	    try:
-		l = line.split(':')
-		Settings[l[0]] = l[1]
-	    except:
-		pass
+	Settings = dict(filter(lambda x: len(x)>1, map(lambda x: x.split(':'), f.readlines())))
 	print Settings
 
 if __name__ == "__main__":
