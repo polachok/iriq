@@ -10,7 +10,7 @@ import gtk.glade
 class gui(gtk.glade.XML):
     def __init__(self):
 	self.local_path = os.path.realpath(os.path.dirname(sys.argv[0]))
-	gladefile = os.path.join(self.local_path, "iriq2.glade")
+	gladefile = os.path.join(self.local_path, "iriq.glade")
 	windowname = "MainWindow"
 	self.wTree = gtk.glade.XML(gladefile)
 	self.wTree.signal_autoconnect(self)
