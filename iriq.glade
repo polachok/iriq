@@ -20,8 +20,8 @@
                 <child>
                   <widget class="GtkComboBox" id="ActInactCbox">
                     <property name="visible">True</property>
-                    <property name="items" translatable="yes">Active
-Inactive</property>
+                    <property name="items" translatable="yes">Active Window
+Inactive Window</property>
                   </widget>
                   <packing>
                     <property name="position">0</property>
