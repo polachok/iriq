@@ -1,14 +1,13 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--Generated with glade3 3.4.5 on Sat Feb  6 19:48:22 2010 -->
 <glade-interface>
-  <!-- interface-requires gtk+ 2.16 -->
-  <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
-    <property name="window_position">center</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkNotebook" id="MainNotebook">
             <property name="visible">True</property>
@@ -16,16 +15,12 @@
             <child>
               <widget class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkComboBox" id="ActInactCbox">
                     <property name="visible">True</property>
                     <property name="items" translatable="yes">Active Window
 Inactive Window</property>
                   </widget>
-                  <packing>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
                 <child>
                   <widget class="GtkImage" id="PreviewImage">
@@ -40,21 +35,19 @@ Inactive Window</property>
                   <widget class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
                     <child>
-                      <widget class="GtkComboBox" id="combobox1">
+                      <widget class="GtkComboBox" id="ColorCbox">
                         <property name="visible">True</property>
                         <property name="items" translatable="yes">Foreground color
 Background color
 Border color</property>
                       </widget>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
-                      <widget class="GtkColorButton" id="colorbutton1">
+                      <widget class="GtkColorButton" id="ColorBtn">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="response_id">0</property>
                         <property name="color">#000000000000</property>
                       </widget>
                       <packing>
@@ -71,6 +64,7 @@ Border color</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="response_id">0</property>
                   </widget>
                   <packing>
                     <property name="position">3</property>
@@ -81,22 +75,19 @@ Border color</property>
                     <property name="visible">True</property>
                     <child>
                       <widget class="GtkCheckButton" id="DecTiledBtn">
-                        <property name="label" translatable="yes">Decorate tiled</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
+                        <property name="label" translatable="yes">Decorate tiled</property>
+                        <property name="response_id">0</property>
                         <property name="draw_indicator">True</property>
                       </widget>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
                       <widget class="GtkCheckButton" id="ShowTagBarBtn">
-                        <property name="label" translatable="yes">Show tag bar</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
+                        <property name="label" translatable="yes">Show tag bar</property>
+                        <property name="response_id">0</property>
                         <property name="draw_indicator">True</property>
                       </widget>
                       <packing>
@@ -116,14 +107,13 @@ Border color</property>
                 <property name="label" translatable="yes">Appearance</property>
               </widget>
               <packing>
-                <property name="tab_fill">False</property>
                 <property name="type">tab</property>
+                <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
               <widget class="GtkVBox" id="vbox3">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -141,15 +131,14 @@ Border color</property>
                 <property name="label" translatable="yes">Hotkeys</property>
               </widget>
               <packing>
+                <property name="type">tab</property>
                 <property name="position">1</property>
                 <property name="tab_fill">False</property>
-                <property name="type">tab</property>
               </packing>
             </child>
             <child>
               <widget class="GtkVBox" id="vbox4">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -164,15 +153,12 @@ Border color</property>
                 <property name="label" translatable="yes">Tags &amp; Rules</property>
               </widget>
               <packing>
+                <property name="type">tab</property>
                 <property name="position">2</property>
                 <property name="tab_fill">False</property>
-                <property name="type">tab</property>
               </packing>
             </child>
           </widget>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
       </widget>
     </child>
