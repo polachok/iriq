@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Sat Feb  6 19:48:22 2010 -->
+<!--Generated with glade3 3.4.5 on Sat Feb  6 23:01:01 2010 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
@@ -23,9 +23,9 @@ Inactive Window</property>
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkImage" id="PreviewImage">
+                  <widget class="GtkDrawingArea" id="PreviewArea">
+                    <property name="height_request">70</property>
                     <property name="visible">True</property>
-                    <property name="stock">gtk-missing-image</property>
                   </widget>
                   <packing>
                     <property name="position">1</property>
