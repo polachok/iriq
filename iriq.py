@@ -32,72 +32,72 @@ class gui(gtk.glade.XML):
     def fontbutton(self, w, s):
 	# XXX: Fix bold italic and so
 	Settings[s] = w.get_font_name().replace(' ', '-')
-	print Settings[s]
+	self.redraw()
+
+    def font(self):
+	name, size = Settings['Echinus*font'].split('-')
+	return name, float(size)
 
     def actinactcbox(self, w, s):
 	self.redraw()
-	print w.get_active_text()
 
     def colorcbox(self, w, s):
 	self.redraw()
-	print w.get_active()
-	print w.get_active_text()
 
     def colorbtn(self, w):
-	self.redraw()
-	s = w.get_color().to_string()
-	c = '#'+s[1:3]+s[6:8]+s[10:12]
+	sl = w.get_color().to_string()
+	c = '#'+sl[1:3]+sl[5:7]+sl[9:11]
 	s = "Echinus*" + ("selected" if self.active() else "normal") + "."
 	s = s + Col[self.wTree.get_widget("ColorCbox").get_active()]
 	Settings[s] = c
+	self.redraw()
 
     def redraw(self):
 	w = lambda x: self.wTree.get_widget(x)
 	w("ColorBtn").set_color(self.color())
+	self.preview_expose(w("PreviewArea"))
 
     def destroy(self, widget):
 	par.write()
 	gtk.main_quit()
 
-    def redraw_preview(self, w, e):
-	c = lambda x: self.getcolor(self.active, Col.index(x))
+    def preview_expose(self, w, e=None):
 	width, height = w.window.get_size()
 	cr = w.window.cairo_create()
-	#cr.set_source_rgb(1.0, 1.0, 1.0)
-	cr.set_source_color(c("bg"))
-	cr.rectangle(e.area.x, e.area.y,
-		e.area.width, e.area.height)
-	cr.clip()
+	if e != None:
+	    cr.rectangle(e.area.x, e.area.y,
+		    e.area.width, e.area.height)
+	    cr.clip()
+	else:
+	    cr.rectangle(0, 0,
+		    width, height)
+	    cr.clip()
+	self.preview_redraw(cr, width, height)
+
+    def preview_redraw(self, cr, width, height):
+	c = lambda x: self.getcolor(self.active, Col.index(x))
 	# background
-	cr.set_source_color(c("bg"))
-	#cr.set_source_rgb(1.0, 1.0, 1.0)
+	cr.set_source_rgb(0.0, 0.0, 0.0)
 	cr.rectangle(0, 0, width, height)
 	cr.fill()
-	# draw a rectangle
-	cr.set_source_rgb(1.0, 1.0, 1.0)
-	cr.rectangle(10, 10, width - 20, height - 20)
-	cr.fill()
-	cr.translate(20, 20)
-	cr.scale((width - 40) / 1.0, (height - 40) / 1.0)
 	# window
-	#cr.set_line_width(0.01)
-	cr.set_line_width(max(cr.device_to_user_distance(2, 2)))
-	#cr.set_source_rgb(0.0, 0.0, 0.8)
+	cr.set_line_width(max(cr.device_to_user_distance(1, 1)))
 	cr.set_source_color(c("bg"))
 	cr.move_to(0, 0)
-	cr.rectangle(0, 0, 1, 0.1)
+	cr.rectangle(10, 10, width-20, height-20)
 	cr.fill()
+	# border
 	cr.set_source_color(c("border"))
 	cr.move_to(0, 0)
-	cr.rectangle(0, 0, 1, 1)
+	cr.rectangle(10, 10, width-20, height-20)
 	cr.stroke()
 	# text
 	cr.set_source_color(c("fg"))
-	cr.select_font_face("Georgia",
+	cr.select_font_face(self.font()[0],
 	cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
-	cr.set_font_size(0.08)
+	cr.set_font_size(self.font()[1])
 	x_bearing, y_bearing, width, height = cr.text_extents("хуй")[:4]
-	cr.move_to(0.01, 0.1-height/1-y_bearing)
+	cr.move_to(15, 20)
 	cr.show_text("хуй")
 
     def __init__(self):
@@ -131,7 +131,7 @@ class gui(gtk.glade.XML):
 	w("ColorBtn").set_color(self.color())
 	w("ColorBtn").connect("color-set", self.colorbtn)
 
-	w("PreviewArea").connect("expose-event", self.redraw_preview)
+	w("PreviewArea").connect("expose-event", self.preview_expose)
 
 
 class parser(file):
