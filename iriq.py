@@ -75,7 +75,7 @@ class gui(gtk.glade.XML):
 	self.preview_redraw(cr, width, height)
 
     def preview_redraw(self, cr, width, height):
-	c = lambda x: self.getcolor(self.active, Col.index(x))
+	c = lambda x: self.getcolor(self.active(), Col.index(x))
 	# background
 	cr.set_source_rgb(0.0, 0.0, 0.0)
 	cr.rectangle(0, 0, width, height)
