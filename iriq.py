@@ -31,7 +31,8 @@ class gui(gtk.glade.XML):
 
     def fontbutton(self, w, s):
 	# XXX: Fix bold italic and so
-	Settings[s] = w.get_font_name().replace(' ', '-')
+	name, space, size = w.get_font_name().rpartition(" ")
+	Settings[s] = name+"-"+size
 	self.redraw()
 
     def font(self):
