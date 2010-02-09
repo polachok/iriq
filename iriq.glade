@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Sat Feb  6 23:01:01 2010 -->
+<!--Generated with glade3 3.4.5 on Tue Feb  9 16:35:10 2010 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="visible">True</property>
@@ -140,7 +140,45 @@ Border color</property>
               <widget class="GtkVBox" id="vbox4">
                 <property name="visible">True</property>
                 <child>
-                  <placeholder/>
+                  <widget class="GtkFixed" id="fixed1">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkComboBox" id="TagSelectCbox">
+                        <property name="width_request">417</property>
+                        <property name="height_request">79</property>
+                        <property name="visible">True</property>
+                        <property name="items" translatable="yes">Select tag</property>
+                      </widget>
+                      <packing>
+                        <property name="x">15</property>
+                        <property name="y">18</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkEntry" id="TagNameEntry">
+                        <property name="width_request">341</property>
+                        <property name="height_request">20</property>
+                        <property name="visible">False</property>
+                        <property name="can_focus">True</property>
+                      </widget>
+                      <packing>
+                        <property name="x">81</property>
+                        <property name="y">136</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="TagNameLabel">
+                        <property name="width_request">100</property>
+                        <property name="height_request">80</property>
+                        <property name="visible">False</property>
+                        <property name="label" translatable="yes">Name</property>
+                      </widget>
+                      <packing>
+                        <property name="x">7</property>
+                        <property name="y">105</property>
+                      </packing>
+                    </child>
+                  </widget>
                 </child>
               </widget>
               <packing>

@@ -101,6 +101,31 @@ class gui(gtk.glade.XML):
 	cr.move_to(15, 20)
 	cr.show_text("хуй")
 
+    def tag_selector_init(self, w):
+	n = int(Settings["Echinus*tags.number"])
+	for i in range(0, n-1):
+	    w.append_text("Tag "+str(i)+": "+Settings["Echinus*tags.name"+str(i)].strip())
+
+    def tagselectcbox(self, wi, s):
+	w = lambda x: self.wTree.get_widget(x)
+	if wi.get_active() > 0:
+	    w("TagNameEntry").set_visibility(True)
+	    w("TagNameEntry").set_text(Settings["Echinus*tags.name"+str(wi.get_active()-1)].strip())
+	    w("TagNameEntry").show()
+	    w("TagNameLabel").show()
+	else:
+	    w("TagNameEntry").set_visibility(False)
+	    w("TagNameEntry").hide()
+	    w("TagNameLabel").hide()
+
+    def tagnameentry(self, wi, e):
+	w = lambda x: self.wTree.get_widget(x)
+	n = w("TagSelectCbox").get_active()
+	Settings["Echinus*tags.name"+str(n-1)] = wi.get_text()
+	w("TagSelectCbox").remove_text(n)
+	w("TagSelectCbox").insert_text(n, "Tag "+str(n-1)+": "+Settings["Echinus*tags.name"+str(n-1)])
+	print wi.get_text()
+
     def __init__(self):
 	w = lambda x: self.wTree.get_widget(x)
 
@@ -134,6 +159,11 @@ class gui(gtk.glade.XML):
 
 	w("PreviewArea").connect("expose-event", self.preview_expose)
 
+	# Tags & rules page
+	self.tag_selector_init(w("TagSelectCbox"))
+	w("TagSelectCbox").connect("changed", self.tagselectcbox, "Blah")
+	w("TagSelectCbox").set_active(0)
+	w("TagNameEntry").connect("focus-out-event", self.tagnameentry)
 
 class parser(file):
     def __init__(self, fname):
