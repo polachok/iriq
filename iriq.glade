@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Feb  9 16:35:10 2010 -->
+<!--Generated with glade3 3.4.5 on Tue Feb  9 17:45:50 2010 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
+    <property name="width_request">400</property>
+    <property name="height_request">500</property>
     <property name="visible">True</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -144,8 +147,6 @@ Border color</property>
                     <property name="visible">True</property>
                     <child>
                       <widget class="GtkComboBox" id="TagSelectCbox">
-                        <property name="width_request">417</property>
-                        <property name="height_request">79</property>
                         <property name="visible">True</property>
                         <property name="items" translatable="yes">Select tag</property>
                       </widget>
@@ -156,26 +157,45 @@ Border color</property>
                     </child>
                     <child>
                       <widget class="GtkEntry" id="TagNameEntry">
-                        <property name="width_request">341</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">False</property>
                         <property name="can_focus">True</property>
                       </widget>
                       <packing>
-                        <property name="x">81</property>
-                        <property name="y">136</property>
+                        <property name="x">65</property>
+                        <property name="y">77</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="GtkLabel" id="TagNameLabel">
-                        <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="visible">False</property>
+                        <property name="width_request">66</property>
+                        <property name="height_request">33</property>
                         <property name="label" translatable="yes">Name</property>
                       </widget>
                       <packing>
-                        <property name="x">7</property>
-                        <property name="y">105</property>
+                        <property name="x">1</property>
+                        <property name="y">74</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="LayoutLabel">
+                        <property name="width_request">71</property>
+                        <property name="label" translatable="yes">Layout</property>
+                      </widget>
+                      <packing>
+                        <property name="y">122</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkComboBox" id="LayoutCbox">
+                        <property name="items" translatable="yes">Default
+Floating
+Smart floating
+Monocle 
+Tile
+Bottom tile</property>
+                      </widget>
+                      <packing>
+                        <property name="x">65</property>
+                        <property name="y">115</property>
                       </packing>
                     </child>
                   </widget>

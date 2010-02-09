@@ -9,10 +9,26 @@ import gtk
 import cairo
 import gtk.glade
 
-Settings = {}
-Lines = {}
+class doubledict(dict):
+    Lines=dict({})
+    def __setitem__(self, i, y):
+	# key[i] = y
+	if i not in self:
+	    print "new item", i, y
+	    j = len(self.Lines)
+	    self.Lines[j+1] = i
+	dict.__setitem__(self, i, y)
+	print "Set item", i, "to", y
+	#print self.Lines
+
+    def dumpto(self, f):
+	for i in self.Lines:
+	    f.write(self.Lines[i]+':  '+self[self.Lines[i]]+'\n')
+
+Settings = doubledict({})
 
 Col = [ "fg", "bg", "border", "button" ]
+Layout = [ "default", "f", "i", "m", "t", "b" ]
 
 class gui(gtk.glade.XML):
     def active(self):
@@ -108,11 +124,18 @@ class gui(gtk.glade.XML):
 
     def tagselectcbox(self, wi, s):
 	w = lambda x: self.wTree.get_widget(x)
+
 	if wi.get_active() > 0:
 	    w("TagNameEntry").set_visibility(True)
 	    w("TagNameEntry").set_text(Settings["Echinus*tags.name"+str(wi.get_active()-1)].strip())
 	    w("TagNameEntry").show()
 	    w("TagNameLabel").show()
+	    try:
+		w("LayoutCbox").set_active(Layout.index(Settings["Echinus*tags.layout"+str(wi.get_active()-1)].strip()))
+	    except KeyError:
+		w("LayoutCbox").set_active(0)
+	    w("LayoutCbox").show()
+	    w("LayoutLabel").show()
 	else:
 	    w("TagNameEntry").set_visibility(False)
 	    w("TagNameEntry").hide()
@@ -124,7 +147,16 @@ class gui(gtk.glade.XML):
 	Settings["Echinus*tags.name"+str(n-1)] = wi.get_text()
 	w("TagSelectCbox").remove_text(n)
 	w("TagSelectCbox").insert_text(n, "Tag "+str(n-1)+": "+Settings["Echinus*tags.name"+str(n-1)])
+	w("TagSelectCbox").set_active(n)
 	print wi.get_text()
+
+    def layoutcbox(self, wi):
+	w = lambda x: self.wTree.get_widget(x)
+
+	n = w("TagSelectCbox").get_active()
+	if wi.get_active > 0:
+	    Settings["Echinus*tags.layout"+str(n-1)]=Layout[wi.get_active()]
+	    print "Set"+Settings["Echinus*tags.layout"+str(n-1)], "to", Layout[wi.get_active()]
 
     def __init__(self):
 	w = lambda x: self.wTree.get_widget(x)
@@ -164,6 +196,7 @@ class gui(gtk.glade.XML):
 	w("TagSelectCbox").connect("changed", self.tagselectcbox, "Blah")
 	w("TagSelectCbox").set_active(0)
 	w("TagNameEntry").connect("focus-out-event", self.tagnameentry)
+	w("LayoutCbox").connect("changed", self.layoutcbox)
 
 class parser(file):
     def __init__(self, fname):
@@ -172,23 +205,21 @@ class parser(file):
 
     def read(self, f):
 	global Settings
-	global Lines
 	# len(x) > 1 is not correct, strips empty lines
-	Settings = dict(filter(lambda x: len(x)>1, map(lambda x: x.strip().split(':'), f.readlines())))
-	f.seek(0)
+	#Settings = doubledict(filter(lambda x: len(x)>1, map(lambda x: x.strip().split(':'), f.readlines())))
+	#f.seek(0)
 	j = 0
 	for i in f:
 	    t = i.strip().split(':')
 	    if len(t) > 1:
-		Lines[j] = t[0]
-		j = j+1
-	Lines.keys().sort()
+		Settings[t[0].strip()] = t[1].strip()
+	    else:
+		print t
+	print "WTF", Settings
 
     def write(self):
 	t = open("test", mode='w')
-	for i in Lines:
-	    t.write(Lines[i]+': '+Settings[Lines[i]]+'\n')
-
+	Settings.dumpto(t)
 
 if __name__ == "__main__":
 	#par = parser(sys.argv[1])
