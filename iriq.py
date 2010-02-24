@@ -22,7 +22,7 @@ class doubledict(dict):
 	#print self.Lines
 
     def dumpto(self, f):
-	Lines.keys().sort()
+	self.Lines.keys().sort()
 	for i in self.Lines:
 	    f.write(self.Lines[i]+':  '+self[self.Lines[i]]+'\n')
 
@@ -32,20 +32,27 @@ Col = [ "fg", "bg", "border", "button" ]
 Layout = [ "default", "f", "i", "m", "t", "b" ]
 
 class rule():
-    widget = gtk.HBox(0, 10)
-    def __init__(self, s):
-	l = gtk.Label("Rule")
-	self.widget.pack_start(l)
-	l.show()
+    widget = ''
+    regexp = ''
+    tag = ''
+    floating = 0
+    title = 0
+    key = ''
+    def __init__(self, k):
+	self.widget = gtk.HBox(0, 10)
+	self.key = k
+	self.regexp, self.tag, self.floating, self.title = Settings[k].rsplit()
 	e = gtk.Entry()
-	e.set_text(s)
+	e.set_text(self.regexp)
 	self.widget.pack_start(e)
 	e.show()
 	c1 = gtk.CheckButton("Floating")
 	self.widget.pack_start(c1)
+	c1.set_active(int(self.floating))
 	c1.show()
 	c2 = gtk.CheckButton("Title")
 	self.widget.pack_end(c2)
+	c2.set_active(int(self.title))
 	c2.show()
 
 class gui(gtk.glade.XML):
@@ -142,10 +149,16 @@ class gui(gtk.glade.XML):
 
     def rules(self, wi):
 	w = lambda x: self.wTree.get_widget(x)
-
-	r = rule("test")
-	wi.put(r.widget, 18, 160)
-	r.widget.show()
+	Rules = {}
+	Rules = map(lambda x: rule(x), filter(lambda x: x.find('Echinus*rule') == 0 , Settings.keys()))
+	i = 0
+	for r in Rules:
+	    r.widget.hide()
+	for r in filter(lambda x: x.tag == w("TagNameEntry").get_text(), Rules):
+	    print r.tag
+	    wi.put(r.widget, 18, 160+i)
+	    r.widget.show()
+	    i = i + 30
 
     def tagselectcbox(self, wi, s):
 	w = lambda x: self.wTree.get_widget(x)
