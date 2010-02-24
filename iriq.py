@@ -31,6 +31,23 @@ Settings = doubledict({})
 Col = [ "fg", "bg", "border", "button" ]
 Layout = [ "default", "f", "i", "m", "t", "b" ]
 
+class rule():
+    widget = gtk.HBox(0, 10)
+    def __init__(self, s):
+	l = gtk.Label("Rule")
+	self.widget.pack_start(l)
+	l.show()
+	e = gtk.Entry()
+	e.set_text(s)
+	self.widget.pack_start(e)
+	e.show()
+	c1 = gtk.CheckButton("Floating")
+	self.widget.pack_start(c1)
+	c1.show()
+	c2 = gtk.CheckButton("Title")
+	self.widget.pack_end(c2)
+	c2.show()
+
 class gui(gtk.glade.XML):
     def active(self):
 	return not self.wTree.get_widget("ActInactCbox").get_active()
@@ -123,6 +140,13 @@ class gui(gtk.glade.XML):
 	for i in range(0, n-1):
 	    w.append_text("Tag "+str(i)+": "+Settings["Echinus*tags.name"+str(i)].strip())
 
+    def rules(self, wi):
+	w = lambda x: self.wTree.get_widget(x)
+
+	r = rule("test")
+	wi.put(r.widget, 18, 160)
+	r.widget.show()
+
     def tagselectcbox(self, wi, s):
 	w = lambda x: self.wTree.get_widget(x)
 
@@ -137,6 +161,7 @@ class gui(gtk.glade.XML):
 		w("LayoutCbox").set_active(0)
 	    w("LayoutCbox").show()
 	    w("LayoutLabel").show()
+	    self.rules(w("TagsRulesFixed"))
 	else:
 	    w("TagNameEntry").set_visibility(False)
 	    w("TagNameEntry").hide()
@@ -216,7 +241,7 @@ class parser(file):
 		Settings[t[0].strip()] = t[1].strip()
 	    else:
 		print t
-	print "WTF", Settings
+	#print "WTF", Settings
 
     def write(self):
 	t = open("test", mode='w')

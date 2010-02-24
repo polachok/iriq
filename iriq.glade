@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Feb  9 21:25:05 2010 -->
+<!--Generated with glade3 3.4.5 on Wed Feb 24 23:15:16 2010 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="width_request">400</property>
@@ -143,7 +143,7 @@ Border color</property>
               <widget class="GtkVBox" id="vbox4">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkFixed" id="fixed1">
+                  <widget class="GtkFixed" id="TagsRulesFixed">
                     <property name="visible">True</property>
                     <child>
                       <widget class="GtkComboBox" id="TagSelectCbox">
@@ -167,12 +167,11 @@ Border color</property>
                     <child>
                       <widget class="GtkLabel" id="TagNameLabel">
                         <property name="width_request">66</property>
-                        <property name="height_request">33</property>
                         <property name="label" translatable="yes">Name</property>
                       </widget>
                       <packing>
                         <property name="x">1</property>
-                        <property name="y">74</property>
+                        <property name="y">78</property>
                       </packing>
                     </child>
                     <child>
@@ -196,60 +195,6 @@ Bottom tile</property>
                       <packing>
                         <property name="x">65</property>
                         <property name="y">115</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="RuleLabel1">
-                        <property name="width_request">60</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Rule
-</property>
-                      </widget>
-                      <packing>
-                        <property name="y">167</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkEntry" id="RuleEntry1">
-                        <property name="width_request">100</property>
-                        <property name="height_request">20</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                      </widget>
-                      <packing>
-                        <property name="x">66</property>
-                        <property name="y">165</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkCheckButton" id="Rule1IsFloatBtn">
-                        <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="label" translatable="yes">Floating</property>
-                        <property name="response_id">0</property>
-                        <property name="draw_indicator">True</property>
-                      </widget>
-                      <packing>
-                        <property name="x">187</property>
-                        <property name="y">134</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkCheckButton" id="Rule1HasTitleBtn">
-                        <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="label" translatable="yes">Title</property>
-                        <property name="response_id">0</property>
-                        <property name="draw_indicator">True</property>
-                      </widget>
-                      <packing>
-                        <property name="x">305</property>
-                        <property name="y">134</property>
                       </packing>
                     </child>
                   </widget>
