@@ -22,6 +22,7 @@ class doubledict(dict):
 	#print self.Lines
 
     def dumpto(self, f):
+	Lines.keys().sort()
 	for i in self.Lines:
 	    f.write(self.Lines[i]+':  '+self[self.Lines[i]]+'\n')
 
