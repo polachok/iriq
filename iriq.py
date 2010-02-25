@@ -180,18 +180,18 @@ class gui(gtk.glade.XML):
 	    w("TagNameEntry").set_visibility(True)
 	    w("TagNameEntry").set_text(Settings["Echinus*tags.name"+str(wi.get_active()-1)].strip())
 	    w("TagNameEntry").show()
-	    w("TagNameLabel").show()
+	    #w("TagNameLabel").show()
 	    try:
 		w("LayoutCbox").set_active(Layout.index(Settings["Echinus*tags.layout"+str(wi.get_active()-1)].strip()))
 	    except KeyError:
 		w("LayoutCbox").set_active(0)
 	    w("LayoutCbox").show()
-	    w("LayoutLabel").show()
+	    #w("LayoutLabel").show()
 	    self.rules(w("TagsRulesFixed"))
 	else:
 	    w("TagNameEntry").set_visibility(False)
 	    w("TagNameEntry").hide()
-	    w("TagNameLabel").hide()
+	    #w("TagNameLabel").hide()
 
     def tagnameentry(self, wi, e):
 	w = lambda x: self.wTree.get_widget(x)
