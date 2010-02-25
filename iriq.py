@@ -55,6 +55,8 @@ class rule():
 	c2.set_active(int(self.title))
 	c2.show()
 
+Rules = {}
+
 class gui(gtk.glade.XML):
     def active(self):
 	return not self.wTree.get_widget("ActInactCbox").get_active()
@@ -149,16 +151,13 @@ class gui(gtk.glade.XML):
 
     def rules(self, wi):
 	w = lambda x: self.wTree.get_widget(x)
-	Rules = {}
-	Rules = map(lambda x: rule(x), filter(lambda x: x.find('Echinus*rule') == 0 , Settings.keys()))
-	i = 0
-	for r in Rules:
-	    r.widget.hide()
+
+	w("RulesVbox").foreach(lambda x: w("RulesVbox").remove(x))
 	for r in filter(lambda x: x.tag == w("TagNameEntry").get_text(), Rules):
-	    print r.tag
-	    wi.put(r.widget, 18, 160+i)
+	    w("RulesVbox").pack_start(r.widget)
 	    r.widget.show()
-	    i = i + 30
+	w("RulesVbox").show()
+	return
 
     def tagselectcbox(self, wi, s):
 	w = lambda x: self.wTree.get_widget(x)
@@ -244,6 +243,7 @@ class parser(file):
 
     def read(self, f):
 	global Settings
+	global Rules
 	# len(x) > 1 is not correct, strips empty lines
 	#Settings = doubledict(filter(lambda x: len(x)>1, map(lambda x: x.strip().split(':'), f.readlines())))
 	#f.seek(0)
@@ -254,6 +254,7 @@ class parser(file):
 		Settings[t[0].strip()] = t[1].strip()
 	    else:
 		print t
+	Rules = map(lambda x: rule(x), filter(lambda x: x.find('Echinus*rule') == 0 , Settings.keys()))
 	#print "WTF", Settings
 
     def write(self):
