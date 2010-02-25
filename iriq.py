@@ -38,21 +38,35 @@ class rule():
     floating = 0
     title = 0
     key = ''
+    def changed(self):
+	Settings[self.key] = "%s %s %s %s" % (self.regexp, self.tag, self.floating, self.title)
+    def regexpchanged(self, wi, e):
+	regexp = wi.get_text()
+	self.changed()
+    def floatchanged(self, w):
+	self.floating = int(w.get_active())
+	self.changed()
+    def titlechanged(self, w):
+	self.title = int(w.get_active())
+	self.changed()
     def __init__(self, k):
 	self.widget = gtk.HBox(0, 10)
 	self.key = k
 	self.regexp, self.tag, self.floating, self.title = Settings[k].rsplit()
 	e = gtk.Entry()
 	e.set_text(self.regexp)
+	e.connect("focus-out-event", self.regexpchanged)
 	self.widget.pack_start(e)
 	e.show()
 	c1 = gtk.CheckButton("Floating")
-	self.widget.pack_start(c1)
 	c1.set_active(int(self.floating))
+	c1.connect("toggled", self.floatchanged)
+	self.widget.pack_start(c1)
 	c1.show()
 	c2 = gtk.CheckButton("Title")
-	self.widget.pack_end(c2)
 	c2.set_active(int(self.title))
+	c2.connect("toggled", self.titlechanged)
+	self.widget.pack_end(c2)
 	c2.show()
 
 Rules = {}
