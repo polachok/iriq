@@ -134,6 +134,7 @@ class gui(gtk.glade.XML):
 
     def preview_redraw(self, cr, width, height):
 	c = lambda x: self.getcolor(self.active(), Col.index(x))
+	text = "iriq"
 	# background
 	cr.set_source_rgb(0.0, 0.0, 0.0)
 	cr.rectangle(0, 0, width, height)
@@ -154,9 +155,9 @@ class gui(gtk.glade.XML):
 	cr.select_font_face(self.font()[0],
 	cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
 	cr.set_font_size(self.font()[1])
-	x_bearing, y_bearing, width, height = cr.text_extents("хуй")[:4]
+	x_bearing, y_bearing, width, height = cr.text_extents(text)[:4]
 	cr.move_to(15, 20)
-	cr.show_text("хуй")
+	cr.show_text(text)
 
     def tag_selector_init(self, w):
 	n = int(Settings["Echinus*tags.number"])
@@ -220,7 +221,7 @@ class gui(gtk.glade.XML):
 	self.wTree.signal_autoconnect(self)
 
 	# Fill the gui
-	w("MainWindow").set_title("Blah")
+	w("MainWindow").set_title("iriq")
 	w("MainWindow").connect("destroy", self.destroy)
 
 	w("DecTiledBtn").set_active(int(Settings["Echinus*decoratetiled"]))
