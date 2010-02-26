@@ -40,15 +40,19 @@ class rule():
     key = ''
     def changed(self):
 	Settings[self.key] = "%s %s %s %s" % (self.regexp, self.tag, self.floating, self.title)
+
     def regexpchanged(self, wi, e):
 	regexp = wi.get_text()
 	self.changed()
+
     def floatchanged(self, w):
 	self.floating = int(w.get_active())
 	self.changed()
+
     def titlechanged(self, w):
 	self.title = int(w.get_active())
 	self.changed()
+
     def __init__(self, k):
 	self.widget = gtk.HBox(0, 10)
 	self.key = k
@@ -70,6 +74,50 @@ class rule():
 	c2.show()
 
 Rules = {}
+
+class hotkeys():
+    widget = ''
+    treestore = ''
+    def edited(self, cell, path, text):
+	self.treestore[path][1] = text
+	Settings[self.treestore[path][2]] = self.treestore[path][1]
+
+    def __init__(self):
+	d = dict({ 'view' : 'Switch to view', 'tag' : 'Move to tag', 'toggletag': 'Toggle tag', 'focusview': 'Focus view' })
+        self.treestore = gtk.TreeStore(str, str, str)
+	n = int(Settings["Echinus*tags.number"])
+	for parent in d.items():
+	    piter = self.treestore.append(None, [ parent[1],  '', '' ])
+	    for child in range(0, n):
+		k = 'Echinus*%s%i'%(parent[0], child)
+		v = Settings.get(k, '')
+		self.treestore.append(piter, [ '%s %i' % (parent[1], child), v, k])
+
+	self.widget = gtk.TreeView(self.treestore)
+
+        self.tvcolumn = gtk.TreeViewColumn('Action')
+        self.tvcolumn2 = gtk.TreeViewColumn('Shortcut')
+
+        self.widget.append_column(self.tvcolumn)
+        self.widget.append_column(self.tvcolumn2)
+
+        self.cell = gtk.CellRendererText()
+        self.cell2 = gtk.CellRendererText()
+	self.cell2.set_property('editable', True)
+	self.cell2.connect('edited', self.edited)
+
+        # add the cell to the tvcolumn and allow it to expand
+        self.tvcolumn.pack_start(self.cell, True)
+        self.tvcolumn2.pack_start(self.cell2, True)
+
+        self.tvcolumn.add_attribute(self.cell, 'text', 0)
+        self.tvcolumn2.add_attribute(self.cell2, 'text', 1)
+
+        self.widget.set_search_column(0)
+        self.tvcolumn.set_sort_column_id(0)
+        # Allow drag and drop reordering of rows
+        self.widget.set_reorderable(False)
+
 
 class gui(gtk.glade.XML):
     def active(self):
@@ -164,6 +212,14 @@ class gui(gtk.glade.XML):
 	for i in range(0, n-1):
 	    w.append_text("Tag "+str(i)+": "+Settings["Echinus*tags.name"+str(i)].strip())
 
+
+    def hotkeys(self):
+	w = lambda x: self.wTree.get_widget(x)
+
+	hk = hotkeys()
+	w("HotkeysVbox").pack_start(hk.widget)
+	hk.widget.show()
+
     def rules(self, wi):
 	w = lambda x: self.wTree.get_widget(x)
 
@@ -250,6 +306,9 @@ class gui(gtk.glade.XML):
 	w("TagSelectCbox").set_active(0)
 	w("TagNameEntry").connect("focus-out-event", self.tagnameentry)
 	w("LayoutCbox").connect("changed", self.layoutcbox)
+
+	# Hotkeys page
+	self.hotkeys()
 
 class parser(file):
     def __init__(self, fname):

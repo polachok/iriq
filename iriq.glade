@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Thu Feb 25 20:33:51 2010 -->
+<!--Generated with glade3 3.4.5 on Fri Feb 26 19:02:15 2010 -->
 <glade-interface>
   <widget class="GtkWindow" id="MainWindow">
     <property name="width_request">400</property>
@@ -125,11 +125,8 @@ Border color</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox3">
+              <widget class="GtkVBox" id="HotkeysVbox">
                 <property name="visible">True</property>
-                <child>
-                  <placeholder/>
-                </child>
                 <child>
                   <placeholder/>
                 </child>
@@ -198,7 +195,6 @@ Bottom tile</property>
                     </child>
                     <child>
                       <widget class="GtkVBox" id="RulesVbox">
-                        <property name="homogeneous">True</property>
                         <child>
                           <placeholder/>
                         </child>
